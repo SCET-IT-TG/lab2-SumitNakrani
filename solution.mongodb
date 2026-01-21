@@ -1,80 +1,66 @@
-/*---Exercise 1: Data Setup---*/
+
+//exe-1 Create companyDB.Insert 5 documents into employees with fields:name (String),department (String: HR, IT, Sales),0salary (Number),age (Number)
 
 db = db.getSiblingDB("companyDB");
 
 db.employees.insertMany([
-  {
-    name: "Raj",
-    department: "IT",
-    salary: 100000,
-    age: 25
-  },
-  {
-    name: "Sumit",
-    department: "HR",
-    salary: 50000,
-    age: 24
-  },
-  {
-    name: "Pratham",
-    department: "Sales",
-    salary: 45000,
-    age: 25
-  },
-  {
-    name: "Darshan",
-    department: "Marketing",
-    salary: 5000,
-    age: 30
-  },
-  {
-    name: "Dev",
-    department: "Marketing",
-    salary: 35000,
-    age: 33
-  }
-]);
+{name:"Dhruvi Khunt",
+department:"HR",
+salary:25000,
+age:20},
+
+{name:"Prit Khunt",
+department:"IT",
+salary:50000,
+age:18},
+
+{name:"Deep Khunt",
+department:"Sales",
+salary:55000,
+age:25},
+
+{name:"Urvisha Khunt",
+department:"HR",
+salary:25000
+,age:30},
+
+{name:"Janavi Khunt",
+department:"IT",
+salary:5000,
+age:30},
+
+{name:"Rahul",
+department:"IT",
+salary:5000,
+age:50}])
 
 
-/*---Exercise 2: Simple Find Queries---*/
+//exe-2 Find all employees belonging to the "IT" department.Find the employee with the name "Rahul".
 
-db.employees.find({ department: "IT" });
+db.employees.find({department:"IT"})
 
-db.employees.find({ name: "Rahul" });
-
-
-/*---Exercise 3: Formatting & Distinct---*/
-
-db.employees.find().pretty();
-
-db.employees.distinct("department");
+db.employees.find({name:"Rahul"})
 
 
-/*---Exercise 4: Salary Analysis ($gt, $lt)---*/
+//exe-3 Display all employees using pretty().Find all unique departments using distinct().
 
-db.employees.find({ 
-  salary: { $gt: 50000 } 
-});
+db.employees.find().pretty()
 
-db.employees.find({ 
-  salary: { $lt: 30000 } 
-});
+db.employees.distinct("department")
 
+//exe-4 Find employees with a salary greater than 50000.Find employees with a salary less than 30000.
 
-/*---Exercise 5: Age Filtering ($gte, $lte)---*/
+db.employees.find({salary:{$gt:50000}})
 
-db.employees.find({ 
-  age: { $gte: 30 } 
-});
+db.employees.find({salary:{$lt:30000}})
 
-db.employees.find({ 
-  age: { $lte: 25 } 
-});
+//exe-5 Find employees whose age is greater than or equal to 30.Find employees whose age is less than or equal to 25.
 
+db.employees.find({age:{$gte:30}})
 
-/*---Exercise 6: Range Queries---*/
+db.employees.find({age:{$lte:25}})
 
-db.employees.find({
-  salary: { $gte: 40000, $lte: 80000 }
-});
+//exe-6 Find employees with salary between 40000 and 80000 (inclusive).
+
+db.employees.find({salary:{$gt:40000,$lte:80000}})
 
