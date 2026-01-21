@@ -1,65 +1,61 @@
-/**
- * Seed script for MongoDB Auto-Grader
- * RUN THIS FIRST: node seed.js
- */
 
-const { MongoClient } = require("mongodb");
+//exe-1 Create companyDB.Insert 5 documents into employees with fields:name (String),department (String: HR, IT, Sales),0salary (Number),age (Number)
 
-const MONGO_URL = "mongodb://localhost:27017";
-const DB_NAME = "companyDB";
+db = db.getSiblingDB("companyDB");
 
-async function seed() {
-  const client = new MongoClient(MONGO_URL);
+db.employees.insertMany([
+{name:"Dhruvi Khunt",
+department:"HR",
+salary:25000,
+age:20},
+{name:"Prit Khunt",
+department:"IT",
+salary:50000,
+age:18},
+{name:"Deep Khunt",
+department:"Sales",
+salary:55000,
+age:25},
+{name:"Urvisha Khunt",
+department:"HR",
+salary:25000
+,age:30},
+{name:"Janavi Khunt",
+department:"IT",
+salary:5000,
+age:30},
+{name:"Rahul",
+department:"IT",
+salary:5000,
+age:50}])
 
-  try {
-    await client.connect();
-    const db = client.db(DB_NAME);
-    const employees = db.collection("employees");
 
-    // Clear old data
-    await employees.deleteMany({});
+//exe-2 Find all employees belonging to the "IT" department.Find the employee with the name "Rahul".
 
-    // Insert required documents
-    await employees.insertMany([
-      {
-        name: "Rahul",
-        department: "IT",
-        salary: 60000,
-        age: 32
-      },
-      {
-        name: "Anita",
-        department: "HR",
-        salary: 28000,
-        age: 24
-      },
-      {
-        name: "Vikram",
-        department: "Sales",
-        salary: 45000,
-        age: 29
-      },
-      {
-        name: "Priya",
-        department: "IT",
-        salary: 80000,
-        age: 35
-      },
-      {
-        name: "Neha",
-        department: "HR",
-        salary: 40000,
-        age: 26
-      }
-    ]);
+db.employees.find({department:"IT"})
 
-    console.log("✅ Data inserted successfully into companyDB.employees");
+db.employees.find({name:"Rahul"})
 
-  } catch (err) {
-    console.error("❌ Error:", err.message);
-  } finally {
-    await client.close();
-  }
-}
 
-seed();
+//exe-3 Display all employees using pretty().Find all unique departments using distinct().
+
+db.employees.find().pretty()
+
+db.employees.distinct("department")
+
+//exe-4 Find employees with a salary greater than 50000.Find employees with a salary less than 30000.
+
+db.employees.find({salary:{$gt:50000}})
+
+db.employees.find({salary:{$lt:30000}})
+
+//exe-5 Find employees whose age is greater than or equal to 30.Find employees whose age is less than or equal to 25.
+
+db.employees.find({age:{$gte:30}})
+
+db.employees.find({age:{$lte:25}})
+
+//exe-6 Find employees with salary between 40000 and 80000 (inclusive).
+
+db.employees.find({salary:{$gt:40000,$lte:80000}})
+
